@@ -1,12 +1,9 @@
 const { default: axios } = require('axios')
-var request = require('request')
 var path = require("path")
 const { exec } = require('child_process');
 const { degrees, PDFDocument, rgb, StandardFonts } = require('pdf-lib');
 
 const fs = require('fs');
-
-var { FormData, File, fileFromPath } = require('formdata-node');
 
 require('dotenv').config()
 
@@ -45,50 +42,27 @@ module.exports = {
                 });
 
                 const pdfBytes = await pdfDoc.save()
-                
-                const pathName = path.format({ dir: 'D:\\Develop\\project\\PDPA-Backend\\controllers', base: 'test.pdf' })
-                fs.writeFile(pathName, pdfBytes, async (err) => {
+
+                const fileName = `${req.body.data.name.replace(".pdf", "")}_${req.body.requester.name.replace(" ", "_")}.pdf`
+
+                const pathName = path.format({ dir: './temp', base: fileName })
+                fs.writeFile(pathName, pdfBytes, async(err) => {
                     if (err) throw err
-                    exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev http://ecm.osdev.co.th:8082/alfresco/api/-default-/public/alfresco/versions/1/nodes/fb77954b-df36-4636-aa76-9166f51db9e2/children`, (err, stdout, stderr) => {
+                    exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev ${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children`, (err, stdout, stderr) => {
                         if (err) {
-                          //some err occurred
-                          console.error(err)
+                            throw err
                         } else {
-                         // the *entire* stdout and stderr (buffered)
-                         console.log(`stdout: ${stdout}`);
-                         console.log(`stderr: ${stderr}`);
+                            fs.unlinkSync(pathName)
+
+                            const response = JSON.parse(stdout)
+
+                            const url = `${process.env.PUBLISHED_BASE_URL}${response.entry.id}`
+                            axios.delete(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`).then(() => {
+                                res.send({ url })
+                            })
                         }
                     })
                 })
-                // var formData = new FormData();
-                // formData.append(
-                //     "filedata",
-                //     fileFromPath(path),
-                //     fileName
-                // })
-                // formData.set("filedata", fs.createReadStream(path))
-                // console.log(formData);
-                // upload
-                // var formData = new FormData();
-                
-                
-                
-                
-                // formData.append(
-                //     "filedata",
-                //     file
-                // );
-                // const publish = await axios({
-                //     method: "post",
-                //     url: `${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children?autoRename=true`,
-                //     data: formData,
-                //     headers: {...req.headers, 'content-Type': 'multipart/form-data' }
-                // })
-
-                // const url = `${process.env.PUBLISHED_BASE_URL}${publish.data.entry.id}`
-
-                // res.send({ url })
-                    // });
             }
         } catch (error) {
             next(error)
