@@ -48,7 +48,7 @@ module.exports = {
                 const pathName = path.format({ dir: './temp', base: fileName })
                 fs.writeFile(pathName, pdfBytes, async(err) => {
                     if (err) throw err
-                    exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev ${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children`, (err, stdout, stderr) => {
+                    exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev ${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children`, async(err, stdout, stderr) => {
                         if (err) {
                             throw err
                         } else {
@@ -56,10 +56,41 @@ module.exports = {
 
                             const response = JSON.parse(stdout)
 
-                            const url = `${process.env.PUBLISHED_BASE_URL}${response.entry.id}`
-                            axios.delete(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`).then(() => {
-                                res.send({ url })
+                            await axios({
+                                method: "put",
+                                url: `${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${response.entry.id}`,
+                                data: {
+                                    name: fileName,
+                                    permissions: {
+                                        isInheritanceEnabled: false,
+                                        locallySet: [{
+                                            authorityId: req.body.requester.id,
+                                            name: "Consumer",
+                                            accessStatus: "ALLOWED"
+                                        }]
+                                    }
+                                },
+                                headers: req.headers
                             })
+
+                            var publishObject = {
+                                isPublished: true,
+                                id: response.entry.id
+                            }
+
+                            if (req.body.expiredAt) {
+                                publishObject.expiredAt = req.body.expiredAt
+                            }
+
+                            await axios({
+                                method: "put",
+                                url: `${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`,
+                                data: {
+                                    publish: publishObject
+                                },
+                            })
+
+                            res.send({ id: response.entry.id })
                         }
                     })
                 })
