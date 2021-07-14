@@ -22,7 +22,7 @@ module.exports = {
             const TICKET = await alfresco_authen();
 
             const currentDate = new Date();
-            const expiredData = publishedData.data.filter(item => new Date(item.expiredAt).toDateString() === currentDate.toDateString())
+            const expiredData = publishedData.data.filter(item => new Date(item.expiredAt).toDateString() === currentDate.toDateString() || new Date(item.expiredAt).getTime() >= currentDate.getTime())
 
             if (expiredData.length > 0) {
                 expiredData.forEach(async(item) => {
