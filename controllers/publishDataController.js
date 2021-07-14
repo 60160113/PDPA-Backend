@@ -49,11 +49,11 @@ module.exports = {
                 fs.writeFile(pathName, pdfBytes, async(err) => {
                     if (err) throw err
                     exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev ${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children`, async(err, stdout, stderr) => {
+                        fs.unlinkSync(pathName)
+
                         if (err) {
                             throw err
                         } else {
-                            fs.unlinkSync(pathName)
-
                             const response = JSON.parse(stdout)
 
                             await axios({
