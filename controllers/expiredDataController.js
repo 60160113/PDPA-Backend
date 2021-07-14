@@ -25,11 +25,11 @@ module.exports = {
             const expiredData = publishedData.data.filter(item => new Date(item.expiredAt).toDateString() === currentDate.toDateString())
 
             if (expiredData.length > 0) {
-                expiredData.forEach((item) => {
+                expiredData.forEach(async(item) => {
                     if (item.publish.isPublished) {
-                        axios.delete(`${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${item.publish.id}?alf_ticket=${TICKET}`)
+                        await axios.delete(`${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${item.publish.id}?alf_ticket=${TICKET}`)
                     }
-                    axios.delete(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${item['_id']}`)
+                    await axios.delete(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${item['_id']}`)
                 });
             }
             res.send({ message: `${expiredData.length} items is removed`, data: expiredData })
