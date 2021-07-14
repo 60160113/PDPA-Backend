@@ -5,10 +5,10 @@ const axiosOptions = {
         'Content-Type': 'application/json'
     }
 }
-async function alfresco_authen() {
+async function alfresco_authen(userId = "admin", password = "newpublicosdev") {
     const res = await axios.post(`${process.env.ALFRESCO_API}authentication/versions/1/tickets`, {
-        userId: "phurk",
-        password: "ivsoft"
+        userId,
+        password
     }, axiosOptions)
 
     return res.data.entry.id
