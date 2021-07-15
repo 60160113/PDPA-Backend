@@ -17,7 +17,7 @@ async function alfresco_authen(userId = "admin", password = "newpublicosdev") {
 module.exports = {
     checkDataExpiration: async(req, res, next) => {
         try {
-            const publishedData = await axios.get(`${process.env.BASE_URL}:${process.env.PORT}/personal_data`)
+            const publishedData = await axios.get(`${process.env.BASE_URL}:${process.env.PORT}/personal_data?publish.isPublished=true`)
 
             const TICKET = await alfresco_authen();
 
