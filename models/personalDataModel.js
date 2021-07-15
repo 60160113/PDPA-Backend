@@ -34,7 +34,7 @@ const personalDataSchema = new schema({
     },
     consents: [],
     createdAt: { type: Date, default: Date.now },
-    expiredAt: { type: Date, default: () => Date.now() + 7 * 24 * 60 * 60 * 1000 }, //default: will be expired in 7 days
+    expiredAt: { type: Date },
     uniqueId: {
         type: String,
         unique: true,
