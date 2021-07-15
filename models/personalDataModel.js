@@ -34,7 +34,7 @@ const personalDataSchema = new schema({
     },
     consents: [],
     createdAt: { type: Date, default: Date.now },
-    expiredAt: { type: Date },
+    expiredAt: { type: Date, default: undefined },
     uniqueId: {
         type: String,
         unique: true,

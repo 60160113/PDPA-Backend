@@ -86,20 +86,15 @@ module.exports = {
                             },
                         })
 
-                        var publishObject = {
-                            isPublished: true,
-                            id: response.entry.id
-                        }
-
-                        if (req.body.expiredAt) {
-                            publishObject.expiredAt = req.body.expiredAt
-                        }
-
                         await axios({
                             method: "put",
                             url: `${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`,
                             data: {
-                                publish: publishObject
+                                publish: {
+                                    isPublished: true,
+                                    id: response.entry.id
+                                },
+                                expiredAt: req.body.expiredAt,
                             },
                         })
 
