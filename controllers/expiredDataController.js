@@ -38,5 +38,20 @@ module.exports = {
         } catch (error) {
             next(error)
         }
+    },
+    forceExpiration: async(req, res, next) => {
+        try {
+            const TICKET = await alfresco_authen();
+
+            await axios.delete(`${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${req.body.publishId}?alf_ticket=${TICKET}`)
+
+            await axios.put(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`, {
+                status: "expired"
+            })
+
+            res.send({ message: `success` })
+        } catch (error) {
+            next(error)
+        }
     }
 }
