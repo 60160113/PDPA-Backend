@@ -4,15 +4,14 @@ const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = {
     find: async(req, res, next) => {
         try {
-            const fields = "data requester consents createdAt expiredAt publish status";
             var data = null;
             if (req.params.id) {
                 data = await model.findOne({
                     _id: new ObjectId(req.params.id),
                     ...req.query
-                }, fields);
+                });
             } else {
-                data = await model.find(req.query, fields).sort({ createdAt: "desc" });
+                data = await model.find(req.query).sort({ createdAt: "desc" });
             }
             res.send(data)
         } catch (error) {

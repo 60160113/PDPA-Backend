@@ -39,14 +39,6 @@ const personalDataSchema = new schema({
         type: String,
         default: "pending"
     },
-    uniqueId: {
-        type: String,
-        unique: true,
-        required: true,
-        default: function() {
-            return `$_%${this.requester.id}&&?${this.data.id}^@#`;
-        }
-    }
 })
 
 const personalData = mongoose.model("personal_data", personalDataSchema, "personal_data")
