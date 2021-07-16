@@ -30,7 +30,11 @@ module.exports = {
                         await axios.delete(`${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${item.publish.id}?alf_ticket=${TICKET}`)
                     }
                     await axios.put(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${item['_id']}`, {
-                        status: "expired"
+                        status: "expired",
+                        publish: {
+                            isPublished: false,
+                            id: ""
+                        }
                     })
                 });
             }
@@ -46,7 +50,11 @@ module.exports = {
             await axios.delete(`${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${req.body.publishId}?alf_ticket=${TICKET}`)
 
             await axios.put(`${process.env.BASE_URL}:${process.env.PORT}/personal_data/${req.params.id}`, {
-                status: "expired"
+                status: "expired",
+                publish: {
+                    isPublished: false,
+                    id: ""
+                }
             })
 
             res.send({ message: `success` })
