@@ -59,7 +59,7 @@ module.exports = {
 
             const fileName = `${req.body.data.name.slice(0, req.body.data.name.lastIndexOf("."))}_${req.body.requester.name.replace(" ", "_")}${req.body.data.name.slice(req.body.data.name.lastIndexOf("."))}`
 
-            const pathName = path.format({ dir: './temp', base: fileName })
+            const pathName = path.format({ dir: './temp', base: `${req.params.id}${req.body.data.name.slice(req.body.data.name.lastIndexOf("."))}` })
             fs.writeFile(pathName, fileBytes, async(err) => {
                 if (err) throw err
                 exec(`curl -F filedata="@${pathName}" -H "Content-Type: multipart/form-data" -X POST --user admin:newpublicosdev ${process.env.ALFRESCO_API}alfresco/versions/1/nodes/${process.env.PUBLISHED_DATA_FOLDER}/children`, async(err, stdout, stderr) => {
