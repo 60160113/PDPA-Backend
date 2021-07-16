@@ -95,6 +95,7 @@ module.exports = {
                                     id: response.entry.id
                                 },
                                 expiredAt: req.body.expiredAt,
+                                status: "approved"
                             },
                         })
 
