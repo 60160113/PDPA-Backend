@@ -4,7 +4,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 module.exports = {
     find: async(req, res, next) => {
         try {
-            const fields = "data requester consents createdAt expiredAt publish";
+            const fields = "data requester consents createdAt expiredAt publish status";
             var data = null;
             if (req.params.id) {
                 data = await model.findOne({
