@@ -56,7 +56,8 @@ module.exports = {
                 publish: {
                     isPublished: false,
                     id: ""
-                }
+                },
+                expiredAt: new Date()
             })
 
             res.send({ message: `success` })
