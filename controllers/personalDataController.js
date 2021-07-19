@@ -24,11 +24,7 @@ module.exports = {
             const data = await personalData.save()
             res.send(data)
         } catch (error) {
-            if (error.code === 11000) {
-                res.status(409).send('Duplicated request')
-            } else {
-                next(error)
-            }
+            next(error)
         }
     },
     update: async(req, res, next) => {
