@@ -28,11 +28,27 @@ async function pdf_watermark(content, watermark) {
     pages.forEach(page => {
         page.drawText(watermark, {
             x: 5,
-            y: height / 2 + 300,
+            y: height - 50,
             size: 50,
             font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
-            rotate: degrees(-45),
+            color: rgb(0, 0.53, 0.71),
+            opacity: 0.5,
+        })
+        page.drawText(watermark, {
+            x: 5,
+            y: 0,
+            size: 50,
+            font: helveticaFont,
+            color: rgb(0, 0.53, 0.71),
+            opacity: 0.5,
+        })
+        page.drawText(watermark, {
+            x: 5,
+            y: height / 2,
+            size: 50,
+            font: helveticaFont,
+            color: rgb(0, 0.53, 0.71),
+            opacity: 0.5,
         })
     });
 
