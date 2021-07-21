@@ -31,24 +31,24 @@ async function pdf_watermark(content, watermark) {
             y: height - 50,
             size: 50,
             font: helveticaFont,
-            color: rgb(0, 0.53, 0.71),
-            opacity: 0.5,
+            color: rgb(0.5, 0.5, 0.5),
+            opacity: 0.6,
         })
         page.drawText(watermark, {
             x: 5,
             y: 0,
             size: 50,
             font: helveticaFont,
-            color: rgb(0, 0.53, 0.71),
-            opacity: 0.5,
+            color: rgb(0.5, 0.5, 0.5),
+            opacity: 0.6,
         })
         page.drawText(watermark, {
             x: 5,
             y: height / 2,
             size: 50,
             font: helveticaFont,
-            color: rgb(0, 0.53, 0.71),
-            opacity: 0.5,
+            color: rgb(0.5, 0.5, 0.5),
+            opacity: 0.6,
         })
     });
 
