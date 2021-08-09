@@ -48,7 +48,7 @@ module.exports = {
                     _id: new ObjectId(req.params.id)
                 }, req.body, { new: true })
             } else {
-                data = await model.update(req.query, req.body, { new: true })
+                data = await model.update(req.body.condition, req.body.data, { new: true })
             }
 
             res.send(data)
