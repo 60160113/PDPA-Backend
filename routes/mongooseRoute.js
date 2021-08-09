@@ -10,6 +10,7 @@ router.post('/:model', mongooseController.save)
 
 // PUT //
 router.put('/:model/:id', mongooseController.update)
+router.put('/:model', mongooseController.update)
 
 // DELETE //
 router.delete('/:model', mongooseController.remove)
