@@ -11,7 +11,8 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use('/personal_data', require('./routes/personalDataRoute'))
+app.use('/mongoose', require('./routes/mongooseRoute'))
+
 app.use('/publish_data', require('./routes/publishDataRoute'))
 app.use('/expired_data', require('./routes/expiredDataRoute'))
 

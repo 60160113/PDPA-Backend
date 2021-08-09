@@ -12,27 +12,11 @@ const personalDataSchema = new schema({
             default: ""
         }
     },
-    data: {
-        id: {
-            type: String,
-            required: true
-        },
-        name: {
-            type: String,
-            default: ""
-        }
+    documents: [],
+    folder: {
+        type: String,
+        default: ""
     },
-    publish: {
-        isPublished: {
-            type: Boolean,
-            default: false
-        },
-        id: {
-            type: String,
-            default: ""
-        }
-    },
-    note: { type: String, default: "" },
     createdAt: { type: Date, default: Date.now },
     expiredAt: { type: Date, default: undefined },
     status: {
