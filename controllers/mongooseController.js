@@ -67,7 +67,7 @@ module.exports = {
                     _id: new ObjectId(req.params.id)
                 })
             } else {
-                data = await model.deleteMany(req.query)
+                data = await model.deleteMany(req.body)
             }
             res.send(data)
         } catch (error) {
