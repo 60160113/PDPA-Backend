@@ -1,10 +1,26 @@
 const models = require('require.all')('../models');
 const ObjectId = require("mongoose").Types.ObjectId;
 
+function get_model(model) {
+    let model_name = ""
+    for (var i = 0; i < model.length; i++) {
+        if (model[i] == "_") {
+            model_name += model[++i].toUpperCase()
+        }else {
+            model_name += model[i]
+        }
+    } 
+    return models[model_name + "Model"]
+}
+
 module.exports = {
     find: async(req, res, next) => {
         try {
-            const model = models[req.params.model + "Model"]
+            const model = get_model(req.params.model)
+
+            if (!model) {
+                throw model
+            }
 
             var data = null;
             if (req.params.id) {
@@ -22,7 +38,11 @@ module.exports = {
     },
     save: async(req, res, next) => {
         try {
-            const model = models[req.params.model + "Model"]
+            const model = get_model(req.params.model)
+
+            if (!model) {
+                throw model
+            }
 
             var data = null
 
@@ -39,7 +59,11 @@ module.exports = {
     },
     update: async(req, res, next) => {
         try {
-            const model = models[req.params.model + "Model"]
+            const model = get_model(req.params.model)
+
+            if (!model) {
+                throw model
+            }
 
             var data = null
 
@@ -58,7 +82,11 @@ module.exports = {
     },
     remove: async(req, res, next) => {
         try {
-            const model = models[req.params.model + "Model"]
+            const model = get_model(req.params.model)
+
+            if (!model) {
+                throw model
+            }
 
             var data = null
 
