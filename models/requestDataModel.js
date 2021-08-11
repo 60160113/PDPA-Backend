@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
-const personalDataSchema = new schema({
+const requestDataSchema = new schema({
     requester: {
         id: {
             type: String,
@@ -17,6 +17,10 @@ const personalDataSchema = new schema({
         type: String,
         default: ""
     },
+    label: {
+        type: String,
+        default: ""
+    },
     createdAt: { type: Date, default: Date.now },
     expiredAt: { type: Date, default: undefined },
     status: {
@@ -25,5 +29,5 @@ const personalDataSchema = new schema({
     },
 })
 
-const personalData = mongoose.model("personal_data", personalDataSchema, "personal_data")
-module.exports = personalData
+const requestData = mongoose.model("request_data", requestDataSchema, "request_data")
+module.exports = requestData
