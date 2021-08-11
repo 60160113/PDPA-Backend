@@ -17,7 +17,7 @@ const requestDataSchema = new schema({
         type: String,
         default: ""
     },
-    label: {
+    name: {
         type: String,
         default: ""
     },
