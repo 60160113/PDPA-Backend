@@ -13,6 +13,8 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/data', require('./routes/mongooseRoute'))
 
+app.use('/request_data', require('./routes/requestDataRoute'))
+
 app.use('/publish_data', require('./routes/publishDataRoute'))
 app.use('/expired_data', require('./routes/expiredDataRoute'))
 
