@@ -7,7 +7,7 @@ const fs = require('fs');
 
 require('dotenv').config()
 
-const PDPA_BASE_URL = `${process.env.BASE_URL}:${process.env.PORT}/data/request_data`
+const PDPA_BASE_URL = `${process.env.BASE_URL}:${process.env.PORT}/data/request`
 
 async function alfresco_authen(userId = "admin", password = "newpublicosdev") {
     const res = await axios.post(`${process.env.ALFRESCO_API}authentication/versions/1/tickets`, {
@@ -155,12 +155,12 @@ module.exports = {
     },
     checkDataExpiration: async(req, res, next) => {
         try {
-            const requestData = await axios.get(`${PDPA_BASE_URL}?status=pending&status=approved`)
+            const request = await axios.get(`${PDPA_BASE_URL}?status=pending&status=approved`)
 
             const TICKET = await alfresco_authen();
 
             const currentDate = new Date();
-            const expiredData = requestData.data.filter(item => new Date(item.expiredAt).toDateString() === currentDate.toDateString() || currentDate.getTime() >= new Date(item.expiredAt).getTime())
+            const expiredData = request.data.filter(item => new Date(item.expiredAt).toDateString() === currentDate.toDateString() || currentDate.getTime() >= new Date(item.expiredAt).getTime())
 
             if (expiredData.length > 0) {
                 expiredData.forEach(async(item) => {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
-const requestDataSchema = new schema({
+const requestSchema = new schema({
     type: {
         type: String,
         default: "regular" // regular: request to admin to get exist files, specific: request/assign someone to send the requested files 
@@ -65,7 +65,7 @@ const requestDataSchema = new schema({
     deadline: Date
 })
 
-requestDataSchema.pre('save', function(next) {
+requestSchema.pre('save', function(next) {
     if(this.type == "regular") {
         this.assignTo = undefined
     }else {
@@ -74,5 +74,5 @@ requestDataSchema.pre('save', function(next) {
     next();
 });
 
-const requestData = mongoose.model("request_data", requestDataSchema, "request_data")
-module.exports = requestData
+const request = mongoose.model("request", requestSchema, "request")
+module.exports = request

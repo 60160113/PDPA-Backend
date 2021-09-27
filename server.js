@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/data', require('./routes/mongooseRoute'))
 
-app.use('/request_data', require('./routes/requestDataRoute'))
+app.use('/request', require('./routes/requestRoute'))
 
 app.get('/', (req, res) => {
     res.send('Hello World')
