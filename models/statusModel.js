@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema
 
-const dataStatusSchema = new schema({
+const statusSchema = new schema({
     value: {
         type: String,
         required: true
@@ -16,5 +16,5 @@ const dataStatusSchema = new schema({
     }
 })
 
-const dataStatus = mongoose.model("data_status", dataStatusSchema, "data_status")
-module.exports = dataStatus
+const status = mongoose.model("status", statusSchema, "status")
+module.exports = status
