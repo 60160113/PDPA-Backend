@@ -28,7 +28,6 @@ const requestSchema = new schema({
         type: String,
         default: ""
     },
-    deadline: { type: Date },
     createdAt: { type: Date, default: Date.now },
     expiredAt: { type: Date, default: undefined },
     status: {
