@@ -13,6 +13,10 @@ const statusSchema = new schema({
     color: {
         type: String,
         default: "info"
+    },
+    icon: {
+        type: String,
+        default: ""
     }
 })
 
