@@ -24,7 +24,7 @@ const requestSchema = new schema({
         type: String,
         default: ""
     },
-    description: {
+    reason: {
         type: String,
         default: ""
     },
