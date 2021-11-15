@@ -3,7 +3,9 @@ const mongooseController = require('../controllers/mongooseController')
 
 // GET //
 router.get('/:model', mongooseController.find)
-router.get('/:model/:id', mongooseController.find)
+
+router.get('/:model/:id', mongooseController.findOne)
+router.get('/getOne/:model', mongooseController.findOne)
 
 // POST //
 router.post('/:model', mongooseController.save)
