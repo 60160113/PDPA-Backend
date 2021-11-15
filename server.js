@@ -15,6 +15,8 @@ app.use('/data', require('./routes/mongooseRoute'))
 
 app.use('/request', require('./routes/requestRoute'))
 
+app.use('/notify', require('./routes/notifyRoute'))
+
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
