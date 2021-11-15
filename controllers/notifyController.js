@@ -18,7 +18,9 @@ module.exports = {
               
             await axios.post('https://notify-api.line.me/api/notify', qs.stringify(req.body), axiosHeader).then((response)=> {
                 res.send({ success: true, text: 'ข้อความของคุณถูกส่งแล้ว'})
-            })
+            }).catch((err => {
+                throw err
+            }))
         } catch (error) {
             next(error)
         }
