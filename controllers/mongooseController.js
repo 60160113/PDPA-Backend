@@ -21,17 +21,59 @@ module.exports = {
             if (!model) {
                 throw model
             }
+            const condition = (({ fields, sort, ...item }) => item)(req.query);
+
+            const fields = req.query.fields || "";
+      
+            const sort = () => {
+              if (req.query.sort) {
+                const sortList = req.query.sort.split(",");
+                var sortObject = {};
+      
+                sortList.forEach(item => {
+                  const spiltItem = item.split(" ");
+                  const key = spiltItem[0];
+                  const value = spiltItem[1] || "asc";
+                  sortObject[key] = value;
+                });
+                return sortObject;
+              } else {
+                return { _id: "desc" };
+              }
+            };
+      
+            const data = await model.find(condition, fields).sort(sort());
+
+            res.send(data)
+        } catch (error) {
+            next(error)
+        }
+    },
+    findOne: async(req, res, next) => {
+        try {
+            const model = get_model(req.params.model)
+
+            if (!model) {
+                throw model
+            }
 
             var data = null;
+
+            const condition = (({ fields, ...item }) => item)(req.query);
+      
+            const fields = req.query.fields || "";
+
             if (req.params.id) {
-                data = await model.findOne({
-                    _id: new ObjectId(req.params.id),
-                    ...req.query
-                });
+              data = await model.findOne(
+                {
+                  _id: new ObjectId(req.params.id),
+                },
+                fields
+              );
             } else {
-                data = await model.find(req.query).sort({ createdAt: "desc" });
+              data = await model.findOne(condition, fields);
             }
-            res.send(data)
+            res.send(data);
         } catch (error) {
             next(error)
         }
