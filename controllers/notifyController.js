@@ -1,5 +1,7 @@
 const axios = require('axios')
 
+const qs = require('qs')
+
 module.exports = {
     line: async(req, res, next) => {
         try {
@@ -8,7 +10,11 @@ module.exports = {
                     return `Bearer ${req.query.authorization}`
                 } else if(req.headers.Authorization) {
                     return req.headers.Authorization
-                } else {
+                } 
+                else if(req.headers.authorization) {
+                    return req.headers.authorization
+                }
+                else {
                     return 'Bearer tkykMAA1ULAZNpKY9XFb5E1LduLboGR0ksYobyz8iLD'
                 }
             }
