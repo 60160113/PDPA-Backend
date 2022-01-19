@@ -28,6 +28,10 @@ const requestSchema = new schema({
         type: String,
         default: ""
     },
+    note: {
+        type: String,
+        default: ""
+    },
     createdAt: { type: Date, default: Date.now },
     expiredAt: { type: Date, default: undefined },
     status: {
