@@ -4,15 +4,10 @@ const qs = require('qs')
 
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
-  host: 'smtp.office365.com',
-  port: 587,
-  secure: false,
+  service: 'gmail',
   auth: {
-    user: 'jrk-crm@jorakay.co.th',
-    pass: 'Jorakay2021'
-  },
-  tls: {
-    ciphers: 'SSLv3'
+    user: 'witcha@osdev.co.th',
+    pass: 'jotijvxbltmybwvf'
   }
 })
 
