@@ -4,10 +4,15 @@ const qs = require('qs')
 
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.office365.com',
+  port: 587,
+  secure: false,
   auth: {
-    user: 'witcha@osdev.co.th',
-    pass: 'jotijvxbltmybwvf'
+    user: 'jrk-crm@jorakay.co.th',
+    pass: 'Jorakay2021'
+  },
+  tls: {
+    ciphers: 'SSLv3'
   }
 })
 
@@ -41,7 +46,8 @@ module.exports = {
         }
     },
     email: async(req, res, next) => {
-      transporter.sendMail(req.body, function (err, info) {
+      const mailOptions = req.body
+      transporter.sendMail(mailOptions, function (err, info) {
         if (err) {
           next(err)
         } else {
